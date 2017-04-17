@@ -3,14 +3,13 @@ package org.sevenzero.quartz.quartzdemo;
 import java.util.Date;
 
 import org.apache.log4j.Logger;
-import org.quartz.DateBuilder;
-import org.quartz.JobBuilder;
 import org.quartz.JobDetail;
 import org.quartz.Scheduler;
 import org.quartz.SchedulerException;
 import org.quartz.SchedulerFactory;
+import org.quartz.SimpleTrigger;
 import org.quartz.Trigger;
-import org.quartz.TriggerBuilder;
+import org.quartz.TriggerUtils;
 import org.quartz.impl.StdSchedulerFactory;
 
 public class HelloExample {
@@ -30,17 +29,22 @@ public class HelloExample {
 	    log.info("------- Initialization Complete -----------");
 
 	    // computer a time that is on the next round minute
-	    Date runTime = DateBuilder.evenMinuteDate(new Date());
+//	    Date runTime = DateBuilder.evenMinuteDate(new Date());
+	    Date runTime = TriggerUtils.getEvenMinuteDate(new Date());
 
 	    log.info("------- Scheduling Job  -------------------");
 
 	    // define the job and tie it to our HelloJob class
-	    JobDetail job = JobBuilder.newJob(HelloJob.class).withIdentity("job1", "group1").build();
-	    JobDetail job2 = JobBuilder.newJob(WorldJob.class).withIdentity("job2", "group1").build();
+	    JobDetail job = new JobDetail("job1", "group1", HelloJob.class); 
+	    //JobBuilder.newJob(HelloJob.class).withIdentity("job1", "group1").build();
+	    JobDetail job2 = new JobDetail("job2", "group1", WorldJob.class);
+	    //JobBuilder.newJob(WorldJob.class).withIdentity("job2", "group1").build();
 
 	    // Trigger the job to run on the next round minute
-	    Trigger trigger = TriggerBuilder.newTrigger().withIdentity("trigger1", "group1").startAt(runTime).build();
-	    Trigger trigger2 = TriggerBuilder.newTrigger().withIdentity("trigger2", "group1").startAt(runTime).build();
+	    Trigger trigger = new SimpleTrigger("trigger1", "group1", runTime, null, 1, 1000L);
+	    //TriggerBuilder.newTrigger().withIdentity("trigger1", "group1").startAt(runTime).build();
+	    Trigger trigger2 = new SimpleTrigger("trigger2", "group1", runTime, null, 1, 1000L);
+	    //TriggerBuilder.newTrigger().withIdentity("trigger2", "group1").startAt(runTime).build();
 
 	    // Tell quartz to schedule the job using our trigger
 	    sched.scheduleJob(job, trigger);
@@ -58,7 +62,7 @@ public class HelloExample {
 		log.info("------- Waiting 120 seconds... -------------");
 		try {
 			// wait 65 seconds to show job
-			Thread.sleep(120L * 1000L);
+			Thread.sleep(300L * 1000L);
 			// executing...
 		} 
 		catch (Exception e) {
