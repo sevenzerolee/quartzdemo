@@ -41,9 +41,9 @@ public class HelloExample {
 	    //JobBuilder.newJob(WorldJob.class).withIdentity("job2", "group1").build();
 
 	    // Trigger the job to run on the next round minute
-	    Trigger trigger = new SimpleTrigger("trigger1", "group1", runTime, null, 1, 1000L);
+	    Trigger trigger = new SimpleTrigger("trigger1", "group1", runTime, null, 10, 1000L);
 	    //TriggerBuilder.newTrigger().withIdentity("trigger1", "group1").startAt(runTime).build();
-	    Trigger trigger2 = new SimpleTrigger("trigger2", "group1", runTime, null, 1, 1000L);
+	    Trigger trigger2 = new SimpleTrigger("trigger2", "group1", runTime, null, 5, 2000L);
 	    //TriggerBuilder.newTrigger().withIdentity("trigger2", "group1").startAt(runTime).build();
 
 	    // Tell quartz to schedule the job using our trigger

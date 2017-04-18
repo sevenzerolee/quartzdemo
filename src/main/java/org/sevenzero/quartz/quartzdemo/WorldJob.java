@@ -14,18 +14,7 @@ public class WorldJob implements Job {
 	public void execute(JobExecutionContext context)
 			throws JobExecutionException {
 		
-		int count = 19;
-		while ( count-- > 10 ) {
-			log.info("World, " + new Date() + ", " + count);
-			
-			try {
-				Thread.sleep(2000L);
-			} 
-			catch (InterruptedException e) {
-				e.printStackTrace();
-			}
-			
-		}
+		log.info("World, +++" + new Date() );
 		
 	}
 

@@ -14,18 +14,7 @@ public class HelloJob implements Job {
 	public void execute(JobExecutionContext context)
 			throws JobExecutionException {
 		
-		int count = 9;
-		while ( count-- > 0 ) {
-			log.info("Hello, " + new Date() + ", " + count);
-			
-			try {
-				Thread.sleep(2000L);
-			} 
-			catch (InterruptedException e) {
-				e.printStackTrace();
-			}
-			
-		}
+		log.info("Hello, --- " + new Date() );
 		
 	}
 
